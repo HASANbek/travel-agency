@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 const guideSchema = z.object({
   cityId: z.number().int().positive(),
   name: z.string().min(1),

@@ -3,6 +3,8 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { getIntegration } from "@/lib/integrations";
 
+export const dynamic = "force-dynamic";
+
 const bodySchema = z.object({
   firstName: z.string().min(1),
   lastName: z.string().optional().nullable(),

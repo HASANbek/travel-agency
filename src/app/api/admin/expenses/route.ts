@@ -3,6 +3,8 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { EXPENSE_CATEGORIES } from "@/lib/crm-constants";
 
+export const dynamic = "force-dynamic";
+
 const expenseSchema = z.object({
   category: z.enum(EXPENSE_CATEGORIES).default("other"),
   description: z.string().min(1),

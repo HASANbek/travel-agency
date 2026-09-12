@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
 import { CHANNELS, generateSecret, getIntegration, IntegrationChannel } from "@/lib/integrations";
 
+export const dynamic = "force-dynamic";
+
 const bodySchema = z.object({
   enabled: z.boolean().optional(),
   botToken: z.string().optional(),

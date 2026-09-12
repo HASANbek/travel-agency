@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 const roomSchema = z.object({
   hotelId: z.number().int().positive(),
   roomType: z.string().min(1),

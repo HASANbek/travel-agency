@@ -3,6 +3,8 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { QUOTATION_STATUSES } from "@/lib/crm-constants";
 
+export const dynamic = "force-dynamic";
+
 const updateSchema = z.object({
   status: z.enum(QUOTATION_STATUSES),
   discountUsd: z.number().nonnegative().optional().nullable(),

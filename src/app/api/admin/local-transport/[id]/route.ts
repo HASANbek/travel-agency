@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 const transportSchema = z.object({
   cityId: z.number().int().positive(),
   type: z.enum(["local", "transfer"]).default("local"),

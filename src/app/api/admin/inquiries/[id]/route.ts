@@ -3,6 +3,8 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { INQUIRY_STATUSES, PRIORITIES } from "@/lib/crm-constants";
 
+export const dynamic = "force-dynamic";
+
 const inquirySchema = z.object({
   customerId: z.number().int().positive(),
   source: z.string().optional().nullable(),

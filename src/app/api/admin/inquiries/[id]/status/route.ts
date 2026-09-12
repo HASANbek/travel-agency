@@ -3,6 +3,8 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { INQUIRY_STATUSES } from "@/lib/crm-constants";
 
+export const dynamic = "force-dynamic";
+
 const schema = z.object({ status: z.enum(INQUIRY_STATUSES) });
 
 export async function PATCH(

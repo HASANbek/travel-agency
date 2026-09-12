@@ -3,6 +3,8 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { INVOICE_STATUSES } from "@/lib/crm-constants";
 
+export const dynamic = "force-dynamic";
+
 const updateSchema = z.object({
   status: z.enum(INVOICE_STATUSES),
   taxPercent: z.number().min(0).max(100).optional().nullable(),

@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import OpenAI from "openai";
 
+export const dynamic = "force-dynamic";
+
 const requestSchema = z.object({
   message: z.string().min(1),
 });

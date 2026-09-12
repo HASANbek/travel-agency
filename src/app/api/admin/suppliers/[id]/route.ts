@@ -3,6 +3,8 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { SUPPLIER_TYPES } from "@/lib/crm-constants";
 
+export const dynamic = "force-dynamic";
+
 const supplierSchema = z.object({
   name: z.string().min(1),
   type: z.enum(SUPPLIER_TYPES).default("other"),

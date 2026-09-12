@@ -3,6 +3,8 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { COMMUNICATION_CHANNELS } from "@/lib/crm-constants";
 
+export const dynamic = "force-dynamic";
+
 // Generic inbound webhook for future WhatsApp/Telegram/Email integrations.
 // A real provider (Meta, Telegram Bot API, etc.) would call this with its own
 // payload shape — translate that at the integration point and forward the

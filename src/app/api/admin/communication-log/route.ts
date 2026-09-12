@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma";
 import { COMMUNICATION_CHANNELS, COMMUNICATION_DIRECTIONS } from "@/lib/crm-constants";
 import { getIntegration } from "@/lib/integrations";
 
+export const dynamic = "force-dynamic";
+
 const logSchema = z.object({
   customerId: z.number().int().positive(),
   channel: z.enum(COMMUNICATION_CHANNELS).default("other"),

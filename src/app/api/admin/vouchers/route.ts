@@ -3,6 +3,8 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { VOUCHER_SERVICE_TYPES } from "@/lib/crm-constants";
 
+export const dynamic = "force-dynamic";
+
 const voucherSchema = z.object({
   bookingId: z.number().int().positive(),
   serviceType: z.enum(VOUCHER_SERVICE_TYPES),

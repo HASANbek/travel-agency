@@ -3,6 +3,8 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { CUSTOMER_TYPES, GENDERS } from "@/lib/crm-constants";
 
+export const dynamic = "force-dynamic";
+
 const customerSchema = z.object({
   firstName: z.string().min(1),
   lastName: z.string().optional().nullable(),

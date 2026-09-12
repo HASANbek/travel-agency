@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getIntegration } from "@/lib/integrations";
 
+export const dynamic = "force-dynamic";
+
 type TelegramUpdate = {
   update_id: number;
   message?: {

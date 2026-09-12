@@ -3,6 +3,8 @@ import { prisma } from "@/lib/prisma";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 
+export const dynamic = "force-dynamic";
+
 const UPLOAD_DIR = path.join(process.cwd(), "public", "uploads", "documents");
 
 export async function GET(request: NextRequest) {

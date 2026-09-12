@@ -3,6 +3,8 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { PAYMENT_TYPES } from "@/lib/crm-constants";
 
+export const dynamic = "force-dynamic";
+
 const paymentSchema = z.object({
   bookingId: z.number().int().positive(),
   type: z.enum(PAYMENT_TYPES).default("cash"),

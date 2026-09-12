@@ -3,6 +3,8 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { MEAL_PLANS } from "@/lib/crm-constants";
 
+export const dynamic = "force-dynamic";
+
 const rateSchema = z.object({
   hotelId: z.number().int().positive(),
   roomId: z.number().int().positive(),

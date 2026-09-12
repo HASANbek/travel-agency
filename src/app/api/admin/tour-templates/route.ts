@@ -3,6 +3,8 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { tourPayloadSchema } from "@/lib/tour-pricing";
 
+export const dynamic = "force-dynamic";
+
 const templateSchema = z.object({
   name: z.string().min(1),
   description: z.string().optional().nullable(),

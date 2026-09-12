@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma";
 import { verifyPassword } from "@/lib/auth-password";
 import { SESSION_COOKIE, SESSION_MAX_AGE_SECONDS, signSession } from "@/lib/session";
 
+export const dynamic = "force-dynamic";
+
 const loginSchema = z.object({
   email: z.string().min(1),
   password: z.string().min(1),

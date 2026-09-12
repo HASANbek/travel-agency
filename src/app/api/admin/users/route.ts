@@ -5,6 +5,8 @@ import { hashPassword } from "@/lib/auth-password";
 import { USER_ROLES } from "@/lib/crm-constants";
 import { canManageUsers } from "@/lib/rbac";
 
+export const dynamic = "force-dynamic";
+
 const createSchema = z.object({
   name: z.string().min(1),
   email: z.string().email(),

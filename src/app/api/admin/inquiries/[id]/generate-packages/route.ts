@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { computeTourLineItems, tourInclude, TourPayload } from "@/lib/tour-pricing";
 
+export const dynamic = "force-dynamic";
+
 const TIERS = [
   { key: "economy", label: "Economy", markup: 0.15 },
   { key: "standard", label: "Standard", markup: 0.2 },
