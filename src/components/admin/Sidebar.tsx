@@ -301,7 +301,7 @@ export default function Sidebar() {
   const { user, logout } = useAuth();
 
   return (
-    <aside className="w-64 shrink-0 border-r border-white/10 bg-blue-900 text-blue-100 flex flex-col">
+    <aside className="w-64 shrink-0 h-screen border-r border-white/10 bg-blue-900 text-blue-100 flex flex-col overflow-hidden">
       <div className="px-5 py-5 border-b border-white/10">
         <p className="text-xs uppercase tracking-widest text-blue-300">{t.nav.appName}</p>
         <p className="text-lg font-semibold text-white mb-3">{t.nav.appSubtitle}</p>
@@ -323,7 +323,7 @@ export default function Sidebar() {
         </div>
       </div>
 
-      <nav className="flex-1 px-3 py-4 flex flex-col gap-1">
+      <nav className="flex-1 min-h-0 overflow-y-auto px-3 py-4 flex flex-col gap-1">
         <Link
           href={dashboardItem.href}
           className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition ${
