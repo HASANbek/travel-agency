@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
+import { syncInvoiceStatuses } from "@/lib/invoice-sync";
 
 export const dynamic = "force-dynamic";
 
@@ -36,5 +37,7 @@ export async function POST(request: NextRequest) {
       notes: parsed.data.notes || null,
     },
   });
-  return NextResponse.json(invoice, { status: 201 });
+  await syncInvoiceStatuses(booking.id);
+  const synced = await prisma.invoice.findUnique({ where: { id: invoice.id } });
+  return NextResponse.json(synced, { status: 201 });
 }

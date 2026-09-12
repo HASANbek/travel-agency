@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { PAYMENT_TYPES } from "@/lib/crm-constants";
+import { syncInvoiceStatuses } from "@/lib/invoice-sync";
 
 export const dynamic = "force-dynamic";
 
@@ -24,5 +25,6 @@ export async function POST(request: NextRequest) {
   }
 
   const payment = await prisma.payment.create({ data: parsed.data });
+  await syncInvoiceStatuses(parsed.data.bookingId);
   return NextResponse.json(payment, { status: 201 });
 }

@@ -101,6 +101,13 @@ export default function MessagesPage() {
     await loadConversations();
   }
 
+  async function handleDelete(id: number) {
+    if (!selectedId) return;
+    await fetch(`/api/admin/communication-log/${id}`, { method: "DELETE" });
+    await loadThread(selectedId);
+    await loadConversations();
+  }
+
   const selected = conversations.find((c) => c.customerId === selectedId);
 
   return (
@@ -167,8 +174,16 @@ export default function MessagesPage() {
                     thread.map((log) => (
                       <div
                         key={log.id}
-                        className={`flex ${log.direction === "outbound" ? "justify-end" : "justify-start"}`}
+                        className={`group flex items-center gap-1.5 ${log.direction === "outbound" ? "justify-end" : "justify-start"}`}
                       >
+                        {log.direction === "outbound" && (
+                          <button
+                            onClick={() => handleDelete(log.id)}
+                            className="opacity-0 group-hover:opacity-100 text-xs text-gray-400 hover:text-red-500 transition"
+                          >
+                            {t.common.delete}
+                          </button>
+                        )}
                         <div
                           className={`max-w-[70%] rounded-2xl px-4 py-2 text-sm ${
                             log.direction === "outbound"
@@ -185,6 +200,14 @@ export default function MessagesPage() {
                             {CHANNEL_ICONS[log.channel] ?? "💭"} {new Date(log.createdAt).toLocaleString()}
                           </p>
                         </div>
+                        {log.direction === "inbound" && (
+                          <button
+                            onClick={() => handleDelete(log.id)}
+                            className="opacity-0 group-hover:opacity-100 text-xs text-gray-400 hover:text-red-500 transition"
+                          >
+                            {t.common.delete}
+                          </button>
+                        )}
                       </div>
                     ))
                   )}

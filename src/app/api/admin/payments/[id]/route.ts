@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { syncInvoiceStatuses } from "@/lib/invoice-sync";
 
 export const dynamic = "force-dynamic";
 
@@ -31,6 +32,7 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
-  await prisma.payment.delete({ where: { id: Number(id) } });
+  const payment = await prisma.payment.delete({ where: { id: Number(id) } });
+  await syncInvoiceStatuses(payment.bookingId);
   return NextResponse.json({ success: true });
 }

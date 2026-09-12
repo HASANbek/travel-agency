@@ -161,6 +161,12 @@ export default function CustomerDetailPage() {
     loadLogs();
   }
 
+  async function handleDeleteLog(id: number) {
+    if (!confirm(t.communication.confirmDelete)) return;
+    await fetch(`/api/admin/communication-log/${id}`, { method: "DELETE" });
+    loadLogs();
+  }
+
   function channelLabel(channel: string) {
     const key = `channel${channel[0].toUpperCase()}${channel.slice(1)}` as keyof typeof t.communication;
     return (t.communication[key] as string) ?? channel;
@@ -561,7 +567,7 @@ export default function CustomerDetailPage() {
         ) : (
           <ul className="divide-y divide-gray-100 dark:divide-white/10">
             {logs.map((log) => (
-              <li key={log.id} className="py-2.5 text-sm">
+              <li key={log.id} className="py-2.5 text-sm group">
                 <div className="flex items-center gap-2 text-xs text-gray-400 mb-1">
                   <span>{channelLabel(log.channel)}</span>
                   <span>·</span>
@@ -572,6 +578,13 @@ export default function CustomerDetailPage() {
                   </span>
                   <span>·</span>
                   <span>{new Date(log.createdAt).toLocaleString()}</span>
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteLog(log.id)}
+                    className="ml-auto opacity-0 group-hover:opacity-100 text-red-500 hover:text-red-600 transition"
+                  >
+                    {t.common.delete}
+                  </button>
                 </div>
                 <p>{log.message}</p>
               </li>

@@ -397,6 +397,7 @@ const dict = {
       directionOutbound: "Chiqish (bizdan)",
       message: "Xabar",
       empty: "Hali muloqot yozilmagan",
+      confirmDelete: "Bu yozuvni o'chirasizmi?",
     },
     cities: {
       title: "Shaharlar",
@@ -1189,6 +1190,7 @@ const dict = {
       directionOutbound: "Исходящее (от нас)",
       message: "Сообщение",
       empty: "Записей общения пока нет",
+      confirmDelete: "Удалить эту запись?",
     },
     cities: {
       title: "Города",
@@ -1981,6 +1983,7 @@ const dict = {
       directionOutbound: "Outbound (from us)",
       message: "Message",
       empty: "No communication logged yet",
+      confirmDelete: "Delete this entry?",
     },
     cities: {
       title: "Cities",
