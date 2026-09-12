@@ -1,0 +1,7 @@
+{
+  "HomePage": {
+    "title": "Travel Agency",
+    "subtitle": "Откройте для себя незабываемые путешествия",
+    "description": "Начните с редактирования src/app/[locale]/page.tsx"
+  }
+}

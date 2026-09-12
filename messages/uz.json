@@ -1,0 +1,7 @@
+{
+  "HomePage": {
+    "title": "Travel Agency",
+    "subtitle": "Unutilmas sayohatlarni his eting",
+    "description": "src/app/[locale]/page.tsx faylini tahrirlashdan boshlang"
+  }
+}

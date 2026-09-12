@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+    color-scheme: dark;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Native <select> dropdown popups don't reliably inherit dark styling from
+   Tailwind classes in Chrome/Edge — force explicit, readable colors here. */
+select {
+  color: #111827;
+}
+
+select option {
+  background-color: #ffffff;
+  color: #111827;
+}
+
+@media (prefers-color-scheme: dark) {
+  select {
+    color: #f4f4f5;
+  }
+
+  select option {
+    background-color: #18181b;
+    color: #f4f4f5;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
