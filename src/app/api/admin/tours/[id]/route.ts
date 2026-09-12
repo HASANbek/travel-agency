@@ -64,6 +64,7 @@ export async function PUT(
       data: {
         name: payload.name,
         notes: payload.notes || null,
+        customerId: payload.customerId || null,
         profitUsd: payload.profitUsd,
         profitUzs: payload.profitUzs,
         totalUsd,

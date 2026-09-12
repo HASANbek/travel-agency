@@ -4,6 +4,7 @@ import { z } from "zod";
 export const tourPayloadSchema = z.object({
   name: z.string().min(1),
   notes: z.string().optional().nullable(),
+  customerId: z.number().int().positive().optional().nullable(),
   profitUsd: z.number().nonnegative().default(0),
   profitUzs: z.number().nonnegative().default(0),
   cityIds: z.array(z.number().int().positive()).min(1),
@@ -262,6 +263,7 @@ export async function computeTourLineItems(payload: TourPayload) {
 }
 
 export const tourInclude = {
+  customer: true,
   cities: { include: { city: true }, orderBy: { position: "asc" as const } },
   attractions: { include: { attraction: { include: { city: true } } } },
   localTransports: { include: { localTransport: { include: { city: true } } } },

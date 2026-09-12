@@ -129,10 +129,13 @@ type HotelEntry = {
   day: number;
 };
 
+type CustomerOption = { id: number; firstName: string; lastName: string | null };
+
 type TourDetail = {
   id: number;
   name: string;
   notes: string | null;
+  customerId: number | null;
   profitUsd: string | null;
   profitUzs: string | null;
   cities: { cityId: number }[];
@@ -162,6 +165,9 @@ export default function TourBuilder({ tourId }: { tourId?: number }) {
   const [savingTemplate, setSavingTemplate] = useState(false);
   const [templateSavedMsg, setTemplateSavedMsg] = useState(false);
   const [templates, setTemplates] = useState<{ id: number; name: string }[]>([]);
+
+  const [customers, setCustomers] = useState<CustomerOption[]>([]);
+  const [customerId, setCustomerId] = useState<string>("");
 
   const [cities, setCities] = useState<City[]>([]);
   const [attractions, setAttractions] = useState<Attraction[]>([]);
@@ -215,6 +221,7 @@ export default function TourBuilder({ tourId }: { tourId?: number }) {
         excursionsRes,
         hotelRatesRes,
         templatesRes,
+        customersRes,
       ] = await Promise.all([
           fetch("/api/admin/cities"),
           fetch("/api/admin/attractions"),
@@ -226,8 +233,10 @@ export default function TourBuilder({ tourId }: { tourId?: number }) {
           fetch("/api/admin/excursions"),
           fetch("/api/admin/hotel-rates"),
           fetch("/api/admin/tour-templates"),
+          fetch("/api/admin/customers"),
         ]);
       setCities(await citiesRes.json());
+      setCustomers(await customersRes.json());
       setAttractions(await attractionsRes.json());
       const transportsList: Transport[] = await transportsRes.json();
       setTransports(transportsList);
@@ -248,6 +257,7 @@ export default function TourBuilder({ tourId }: { tourId?: number }) {
         const tour: TourDetail = await tourRes.json();
         setName(tour.name);
         setNotes(tour.notes ?? "");
+        setCustomerId(tour.customerId ? String(tour.customerId) : "");
         setProfitUsd(tour.profitUsd ?? "0");
         setProfitUzs(tour.profitUzs ?? "0");
         setCityOrder(tour.cities.map((c) => c.cityId));
@@ -744,6 +754,7 @@ export default function TourBuilder({ tourId }: { tourId?: number }) {
     return {
       name,
       notes: notes || null,
+      customerId: customerId ? Number(customerId) : null,
       profitUsd: Number(profitUsd) || 0,
       profitUzs: Number(profitUzs) || 0,
       cityIds: cityOrder,
@@ -831,6 +842,7 @@ export default function TourBuilder({ tourId }: { tourId?: number }) {
     const payload = { ...fullPayload } as Partial<typeof fullPayload>;
     delete payload.name;
     delete payload.notes;
+    delete payload.customerId;
     delete payload.profitUsd;
     delete payload.profitUzs;
     setSavingTemplate(true);
@@ -984,6 +996,16 @@ export default function TourBuilder({ tourId }: { tourId?: number }) {
               onChange={(e) => setName(e.target.value)}
               placeholder={t.builder.tourNamePlaceholder}
             />
+          </Field>
+          <Field label={t.builder.customer} className="w-56">
+            <Select value={customerId} onChange={(e) => setCustomerId(e.target.value)}>
+              <option value="">{t.builder.customerNone}</option>
+              {customers.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.firstName} {c.lastName ?? ""}
+                </option>
+              ))}
+            </Select>
           </Field>
           <Field label={t.builder.notes} className="flex-1 min-w-[200px]">
             <Input
