@@ -616,7 +616,8 @@ export default function TourBuilder({ tourId }: { tourId?: number }) {
     defaultDay: number
   ) {
     if (id in sel) {
-      const { [id]: _drop, ...rest } = sel;
+      const rest = { ...sel };
+      delete rest[id];
       setSel(rest);
     } else {
       setSel({ ...sel, [id]: { quantity: defaultQty, day: defaultDay } });
@@ -826,7 +827,12 @@ export default function TourBuilder({ tourId }: { tourId?: number }) {
     }
     const templateName = window.prompt(t.builder.templateNamePrompt, name || "");
     if (!templateName) return;
-    const { name: _n, notes: _notes, profitUsd: _pu, profitUzs: _puz, ...payload } = buildPayload();
+    const fullPayload = buildPayload();
+    const payload = { ...fullPayload } as Partial<typeof fullPayload>;
+    delete payload.name;
+    delete payload.notes;
+    delete payload.profitUsd;
+    delete payload.profitUzs;
     setSavingTemplate(true);
     await fetch("/api/admin/tour-templates", {
       method: "POST",
