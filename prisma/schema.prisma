@@ -228,6 +228,8 @@ model LocalTransport {
   supplierId    Int?
   type          String   @default("local")
   location      String?
+  vehicleType   String?  @default("sedan")
+  seatCapacity  Int?
   name          String
   nameRu        String?
   nameEn        String?

@@ -15,6 +15,7 @@ import {
 import { formatUsd, formatUzs } from "@/lib/format";
 import { useAdminI18n } from "@/lib/admin-i18n";
 import { localizedDescription, localizedName } from "@/lib/localize";
+import { VEHICLE_TYPES } from "@/lib/crm-constants";
 
 type City = { id: number; name: string };
 type Transport = {
@@ -22,6 +23,8 @@ type Transport = {
   cityId: number;
   type: string;
   location: string | null;
+  vehicleType: string | null;
+  seatCapacity: number | null;
   name: string;
   nameRu: string | null;
   nameEn: string | null;
@@ -38,6 +41,8 @@ type FormState = {
   cityId: string;
   type: string;
   location: string;
+  vehicleType: string;
+  seatCapacity: string;
   name: string;
   nameRu: string;
   nameEn: string;
@@ -53,6 +58,8 @@ const emptyForm: FormState = {
   cityId: "",
   type: "local",
   location: "",
+  vehicleType: "sedan",
+  seatCapacity: "",
   name: "",
   nameRu: "",
   nameEn: "",
@@ -101,6 +108,8 @@ export default function LocalTransportPage() {
       cityId: Number(f.cityId),
       type: f.type,
       location: f.type === "transfer" ? f.location || null : null,
+      vehicleType: f.vehicleType,
+      seatCapacity: f.seatCapacity ? Number(f.seatCapacity) : null,
       name: f.name,
       nameRu: f.nameRu || null,
       nameEn: f.nameEn || null,
@@ -135,6 +144,8 @@ export default function LocalTransportPage() {
       cityId: String(tp.cityId),
       type: tp.type,
       location: tp.location ?? "",
+      vehicleType: tp.vehicleType ?? "sedan",
+      seatCapacity: tp.seatCapacity != null ? String(tp.seatCapacity) : "",
       name: tp.name,
       nameRu: tp.nameRu ?? "",
       nameEn: tp.nameEn ?? "",
@@ -172,6 +183,14 @@ export default function LocalTransportPage() {
     if (location === "station") return t.transport.locationStation;
     if (location === "border") return t.transport.locationBorder;
     return "—";
+  }
+
+  function vehicleTypeLabel(vehicleType: string | null) {
+    if (vehicleType === "minivan") return t.transport.vehicleTypeMinivan;
+    if (vehicleType === "suv") return t.transport.vehicleTypeSuv;
+    if (vehicleType === "bus") return t.transport.vehicleTypeBus;
+    if (vehicleType === "other") return t.transport.vehicleTypeOther;
+    return t.transport.vehicleTypeSedan;
   }
 
   return (
@@ -217,6 +236,26 @@ export default function LocalTransportPage() {
               </Select>
             </Field>
           )}
+          <Field label={t.transport.vehicleTypeLabel} className="w-36">
+            <Select
+              value={form.vehicleType}
+              onChange={(e) => setForm({ ...form, vehicleType: e.target.value })}
+            >
+              {VEHICLE_TYPES.map((vt) => (
+                <option key={vt} value={vt}>
+                  {vehicleTypeLabel(vt)}
+                </option>
+              ))}
+            </Select>
+          </Field>
+          <Field label={t.transport.seatCapacity} className="w-28">
+            <Input
+              type="number"
+              min="1"
+              value={form.seatCapacity}
+              onChange={(e) => setForm({ ...form, seatCapacity: e.target.value })}
+            />
+          </Field>
           <Field label={t.transport.nameLabel} className="w-52">
             <Input
               value={form.name}
@@ -320,6 +359,8 @@ export default function LocalTransportPage() {
                 <th className="px-5 py-3 font-medium">{t.common.city}</th>
                 <th className="px-5 py-3 font-medium">{t.transport.colType}</th>
                 <th className="px-5 py-3 font-medium">{t.transport.colLocation}</th>
+                <th className="px-5 py-3 font-medium">{t.transport.colVehicleType}</th>
+                <th className="px-5 py-3 font-medium">{t.transport.colSeatCapacity}</th>
                 <th className="px-5 py-3 font-medium">{t.transport.colName}</th>
                 <th className="px-5 py-3 font-medium">{t.common.description}</th>
                 <th className="px-5 py-3 font-medium">{t.common.phone}</th>
@@ -372,6 +413,28 @@ export default function LocalTransportPage() {
                             <option value="border">{t.transport.locationBorder}</option>
                           </Select>
                         )}
+                      </td>
+                      <td className="px-5 py-2.5">
+                        <Select
+                          value={editForm.vehicleType}
+                          onChange={(e) => setEditForm({ ...editForm, vehicleType: e.target.value })}
+                          className="w-32"
+                        >
+                          {VEHICLE_TYPES.map((vt) => (
+                            <option key={vt} value={vt}>
+                              {vehicleTypeLabel(vt)}
+                            </option>
+                          ))}
+                        </Select>
+                      </td>
+                      <td className="px-5 py-2.5">
+                        <Input
+                          type="number"
+                          min="1"
+                          value={editForm.seatCapacity}
+                          onChange={(e) => setEditForm({ ...editForm, seatCapacity: e.target.value })}
+                          className="w-20"
+                        />
                       </td>
                       <td className="px-5 py-2.5">
                         <div className="flex flex-col gap-1">
@@ -461,6 +524,12 @@ export default function LocalTransportPage() {
                       </td>
                       <td className="px-5 py-3 text-gray-500 dark:text-white/50">
                         {tp.type === "transfer" ? locationLabel(tp.location) : "—"}
+                      </td>
+                      <td className="px-5 py-3 text-gray-500 dark:text-white/50">
+                        {vehicleTypeLabel(tp.vehicleType)}
+                      </td>
+                      <td className="px-5 py-3 text-gray-500 dark:text-white/50 tabular-nums">
+                        {tp.seatCapacity ?? "—"}
                       </td>
                       <td className="px-5 py-3">{localizedName(tp, lang)}</td>
                       <td className="px-5 py-3 text-gray-500 dark:text-white/50">

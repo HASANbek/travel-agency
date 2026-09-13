@@ -61,6 +61,9 @@ export const SUPPLIER_TYPES = [
 ] as const;
 export type SupplierType = (typeof SUPPLIER_TYPES)[number];
 
+export const VEHICLE_TYPES = ["sedan", "minivan", "suv", "bus", "other"] as const;
+export type VehicleType = (typeof VEHICLE_TYPES)[number];
+
 export const MEAL_PLANS = ["RO", "BB", "HB", "FB", "AI"] as const;
 export type MealPlan = (typeof MEAL_PLANS)[number];
 

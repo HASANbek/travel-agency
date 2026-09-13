@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
+import { VEHICLE_TYPES } from "@/lib/crm-constants";
 
 export const dynamic = "force-dynamic";
 
@@ -8,6 +9,8 @@ const transportSchema = z.object({
   cityId: z.number().int().positive(),
   type: z.enum(["local", "transfer"]).default("local"),
   location: z.enum(["airport", "station", "border"]).optional().nullable(),
+  vehicleType: z.enum(VEHICLE_TYPES).default("sedan"),
+  seatCapacity: z.number().int().positive().optional().nullable(),
   name: z.string().min(1),
   nameRu: z.string().optional().nullable(),
   nameEn: z.string().optional().nullable(),
